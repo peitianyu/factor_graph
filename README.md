@@ -15,7 +15,7 @@ test_slam_g2o
 # build
 
 ```
-cd factor_graph && mkdir build
+cd factor_graph_optimize && mkdir build
 cd  build && cmake ..
 make -j
 ./g2o_slam2d
