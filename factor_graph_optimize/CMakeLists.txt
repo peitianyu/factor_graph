@@ -22,28 +22,6 @@ include_directories(
     ${EIGEN3_INCLUDE_DIR}
     ${CMAKE_SOURCE_DIR}
     )
-    
-add_library(${PROJECT_NAME}
-    "micro_graph_optimizer.cpp" "micro_graph_optimizer.h"
-    )
-
-add_executable(hello_slam
-    "examples/hello_slam.cpp"
-    )
-
-target_link_libraries(hello_slam
-    ${PROJECT_NAME}
-    )
-
-add_executable(slam2d
-    examples/slam2d.cpp
-    )
-
-target_link_libraries(slam2d
-    ${PROJECT_NAME}
-    )
-
-
 
 # 添加.h文件
 include_directories(src
