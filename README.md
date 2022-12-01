@@ -57,3 +57,9 @@ cd  build && cmake ..
 make -j
 ./g2o_slam2d
 ```
+
+# 最后
+```
+1. 有问题可以在issues上提
+2. 如果有自己修改的话建议,也可以放在issues上开放出来
+```
