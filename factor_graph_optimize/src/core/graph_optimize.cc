@@ -76,6 +76,7 @@ void GraphOptimize::LinearizeSingleFactor(Factor *factor, SparsityPattern *patte
             vars_dim[i] = var_dim;
             n_cols += var_dim;
         }
+        
     }
 
     if (n_cols == 0)
@@ -83,7 +84,6 @@ void GraphOptimize::LinearizeSingleFactor(Factor *factor, SparsityPattern *patte
         GRAPH_LOG("All variables connected to this factor are fixed.");
         return;
     }
-
     Eigen::MatrixXd Js(n_rows, n_cols);
     for (int i = 0, start_col = 0; i < num_variables; ++i)
     {
@@ -94,12 +94,9 @@ void GraphOptimize::LinearizeSingleFactor(Factor *factor, SparsityPattern *patte
             start_col += J.cols();
         }
     }
-
     // 求解JtJ获得整个H,之后会对稀疏H矩阵进行赋值
     Eigen::MatrixXd JtJ(Js.cols(), Js.cols());
     JtJ.noalias() = Js.transpose() * Js; // Eigen默认会解决混淆问题，如果你确定不会出现混淆，可以使用noalias（）来提效
-
-    
 
     // Now we need to add the contribution to H. Note that we are only filling the lower triangular part. // 通过雅可比求解H矩阵
     for (int i = 0; i < num_variables; ++i)
@@ -116,6 +113,7 @@ void GraphOptimize::LinearizeSingleFactor(Factor *factor, SparsityPattern *patte
             {
                 continue;
             }
+            
             const int H_row = pattern->VariableLookup(factor->VariableAt(j)).Idx();
             const int JtJ_row = vars_cols[j];
             for (int JtJ_i = JtJ_col, H_i = H_col; JtJ_i < (JtJ_col + vars_dim[i]); ++JtJ_i, ++H_i)
@@ -127,7 +125,7 @@ void GraphOptimize::LinearizeSingleFactor(Factor *factor, SparsityPattern *patte
             }
         }
     }
-
+    
     // Handle the vector b.
     // 对b赋值
     const Eigen::VectorXd Jtb = Js.transpose() * factor->Error();

@@ -79,6 +79,7 @@ private:
                 return false;
             }
         }
+        return true;
     }
 
     void DumpPoses(const std::string &filename, const FactorGraph &graph)

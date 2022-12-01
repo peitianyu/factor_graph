@@ -6,11 +6,18 @@
 #include<Eigen/Core>
 #include"variable.h"
 #include "utils.h"
+#include <iostream>
 
 class Factor
 {
 public:
     static constexpr int kMaxVariables = 2;
+
+    virtual ~Factor()
+    {
+        // std::cerr << "Never delete Factor" << std::endl;
+    }
+
     int NumVariables() const;
 
     void AddVariable(Variable *v);

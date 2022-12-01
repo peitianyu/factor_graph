@@ -67,4 +67,6 @@ private:
     Eigen::Vector2d m_measurement;
 };
 
+
+
 #endif // __UNIVARIATE_FACTOR_H__

@@ -48,14 +48,15 @@ Eigen::VectorXd Factor::WeightedError() const
 
 Eigen::MatrixXd Factor::WeightedJacobian(int idx) const
 {
+    
     Eigen::MatrixXd jacobian = Jacobian(idx);
-
+    
     if (m_sqrt_info_set)
     {
         GRAPH_ASSERT(m_sqrt_info.cols() == jacobian.rows());
         jacobian = m_sqrt_info * jacobian;
     }
-
+    
     return jacobian;
 }
 
@@ -70,16 +71,16 @@ Eigen::MatrixXd Factor::ComputeNumericalJacobian(Variable * v) const
     constexpr double k = 1.0 / (2.0 * h);
     for (int i = 0; i < N; ++i)
     {
-    dx(i) = h;
-    v->Plus(dx); // right
-    const Eigen::VectorXd dy1 = this->SubtractError(this->Error(), dy0);
-    dx(i) = -2.0 * h;
-    v->Plus(dx); // left
-    const Eigen::VectorXd dy2 = this->SubtractError(this->Error(), dy0);
-    dx(i) = h;
-    v->Plus(dx); // return to original state.
-    dx(i) = 0.0;
-    J.col(i) << (dy1 - dy2) * k;
+        dx(i) = h;
+        v->Plus(dx); // right
+        const Eigen::VectorXd dy1 = this->SubtractError(this->Error(), dy0);
+        dx(i) = -2.0 * h;
+        v->Plus(dx); // left
+        const Eigen::VectorXd dy2 = this->SubtractError(this->Error(), dy0);
+        dx(i) = h;
+        v->Plus(dx); // return to original state.
+        dx(i) = 0.0;
+        J.col(i) << (dy1 - dy2) * k;
     }
     return J;
 }
