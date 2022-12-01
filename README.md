@@ -6,6 +6,8 @@
 
 ```
 此程序主要学习了mini_sam思路,讲真mini_sam库真心清晰,明了,干净.
+设计目的:
+	实现一种开放的,便于拓展的因子图库,core函数用模板实现,为实现不同的因子图,可自行设计variable与factor,本案例提供了4种方案
 程序包含
 Core:	主函数在graph_optimize进行优化,然后通过sparsity_pattern保存稀疏矩阵缓存,variable与factor构造虚函数
 types: 	构造二维空间下的variable与factor
@@ -30,6 +32,7 @@ sparsity_pattern: 	包含两个部分一个是variable搜索引导一个是H与b
 1. 纯2d_point的优化
 2. 2d环境下point与pose的优化(比如, 反光板与里程计)
 3. 纯2d_pose的优化,(主要展示了读取g2o文件,并优化的效果)
+4. 纯3d_pose的优化,(主要展示了读取g2o文件,并优化的效果)
 ```
 
 # BUG
@@ -43,6 +46,7 @@ sparsity_pattern: 	包含两个部分一个是variable搜索引导一个是H与b
 ```
 1. 边缘化操作
 2. 如果H并不是稀疏矩阵,通过近似最小度排序变为稀疏矩阵
+3. 加入imu预积分因子
 ```
 
 # Build
@@ -53,4 +57,3 @@ cd  build && cmake ..
 make -j
 ./g2o_slam2d
 ```
-
